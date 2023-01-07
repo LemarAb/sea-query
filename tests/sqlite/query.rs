@@ -494,10 +494,9 @@ fn select_34a() {
 
 #[test]
 fn select_35() {
-    let (statement, values) = Query::select()
-        .column(Glyph::Id)
-        .from(Glyph::Table)
-        .and_where(Expr::col(Glyph::Aspect).is_null())
+    let (statement, values) = SelectStatement::new()
+        .expr(Expr::col(Glyph::Id).count())
+        .from((Glyph::Table).into_table_ref())
         .build(SqliteQueryBuilder);
 
     assert_eq!(
